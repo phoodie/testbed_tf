@@ -24,7 +24,7 @@ resource "aws_instance" "example" {
 		Name				= "terraform-example"
 	}
 }
-
+# creating a security profile to allow inbound and outbount traffic of ec2
 resource "aws_security_group" "instance" {
 	name = "terraform-example-instance"
 
@@ -34,4 +34,25 @@ resource "aws_security_group" "instance" {
 		protocol		= "tcp"
 		cidr_blocks = ["0.0.0.0/0"]
 	}
+}
+
+# Deploying a config web server: creating variables
+
+variable "object_example_with_error" {
+	description 	= "An example of a structural type in Terraform with an error"
+	type					= object({
+		name			= string
+		age				= number
+		tags			= list(string)
+		enabled		= bool
+})
+
+# populate variable with value
+default = {
+	name		  = "value1"
+	age			  = "42"
+	tags		  =	["a", "b", "c"]
+	enabled 	= "invalid"
+	}
+
 }
